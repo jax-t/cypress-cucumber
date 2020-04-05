@@ -2,14 +2,14 @@
 
 const execSync = require('child_process').execSync;
 // import { execSync } from 'child_process';  // replace ^ if using ES modules
-const output = execSync("jq -s 'map(.[0])' ./cypress/cucumber-json/*.cucumber.json > ./cypress/cucumber-json/combined.json", { encoding: 'utf-8' });  // the default is 'buffer'
+const output = execSync("jq -s 'map(.[0])' ./cypress/cucumber-report/*.cucumber.json > ./cypress/cucumber-report/combined.json", { encoding: 'utf-8' });  // the default is 'buffer'
 console.log('Output was:\n', output);
 
 var reporter = require('cucumber-html-reporter');
 var options = {
         theme: 'hierarchy',
-        jsonFile: 'cypress/cucumber-json/combined.json',
-        output: 'cypress/cucumber-json/cucumber.html',
+        jsonFile: 'cypress/cucumber-report/combined.json',
+        output: 'cypress/cucumber-report/cucumber.html',
         reportSuiteAsScenarios: true,
         scenarioTimestamp: true,
         launchReport: true,
