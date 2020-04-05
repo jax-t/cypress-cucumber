@@ -32,7 +32,8 @@
     "scripts": "./node_modules/.bin/cypress run -e GLOB='cypress/integration/test/features/*.feature' --record --key 10d709eb-1cc4-4558-9a0f-aa6e21920f32 --parallel",
     "report": "node cucumber-html-generator2.js",
     "test": "npm run pretest; npm run scripts || npm run report",
-    "debug": "./node_modules/.bin/cypress open"
+    "debug": "./node_modules/.bin/cypress open",
+    "cy:verify": "cypress verify"
   },
   "cypress-cucumber-preprocessor": {
     "nonGlobalStepDefinitions": true,
