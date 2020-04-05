@@ -3,6 +3,5 @@
   "supportFile": "cypress/support/index.js",
   "testFiles": "**/*.feature",
   "ignoreTestFiles": "**/*.{js,ts}",
-  "reporter": "cypress-multi-reporters",
   "projectId": "978m61"
 }
