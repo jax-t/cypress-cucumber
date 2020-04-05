@@ -1,0 +1,46 @@
+{
+  "name": "cypress_cucumber_allure",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "@babel/runtime": "^7.9.2",
+    "@cypress/webpack-preprocessor": "^4.1.3",
+    "@types/node": "^13.11.0",
+    "@types/webpack-env": "^1.15.1",
+    "babel-loader": "^8.1.0",
+    "cucumber": "^6.0.5",
+    "cucumber-html-reporter": "^5.2.0",
+    "cypress": "^4.2.0",
+    "cypress-cucumber-preprocessor": "^2.2.0",
+    "cypress-multi-reporters": "^1.2.4",
+    "ts-loader": "^6.2.2",
+    "typescript": "^3.8.3",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  },
+  "scripts": {
+    "clean:reports": "rm -R -f cypress/cucumber-report && mkdir cypress/cucumber-report",
+    "pretest": "npm run clean:reports",
+    "scripts": "./node_modules/.bin/cypress run -e GLOB='cypress/integration/test/features/*.feature'",
+    "report": "node cucumber-html-generator2.js",
+    "test": "npm run pretest; npm run scripts || npm run report",
+    "debug": "./node_modules/.bin/cypress open"
+  },
+  "cypress-cucumber-preprocessor": {
+    "nonGlobalStepDefinitions": true,
+    "cucumberJson": {
+      "generate": true,
+      "outputFolder": "cypress/cucumber-report",
+      "filePrefix": "",
+      "fileSuffix": ".cucumber"
+    }
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "multiple-cucumber-html-reporter": "^1.16.0"
+  }
+}

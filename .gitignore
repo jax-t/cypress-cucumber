@@ -1,0 +1,15 @@
+node_modules
+cypress/videos
+cypress/screenshots
+cypress/cucumber-report
+xunit.xml
+
+    
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
