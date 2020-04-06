@@ -26,7 +26,7 @@
     "e2e:chrome": "cypress run --browser chrome",
     "e2e:record": "cypress run --record",
     "e2e:record:edge": "cypress run --record --browser edge",
-    "e2e:record:parallel": "cypress run -e GLOB='cypress/integration/test/features/*.feature' --record --parallel --key 10d709eb-1cc4-4558-9a0f-aa6e21920f32",
+    "e2e:record:parallel": "cypress run -e GLOB='cypress/integration/test/features/*.feature' --record --parallel --key 10d709eb-1cc4-4558-9a0f-aa6e21920f32 --browser chrome",
     "clean:reports": "rm -R -f cypress/cucumber-report && mkdir cypress/cucumber-report",
     "pretest": "npm run clean:reports",
     "scripts": "./node_modules/.bin/cypress run -e GLOB='cypress/integration/test/features/*.feature' --record --key 10d709eb-1cc4-4558-9a0f-aa6e21920f32",
