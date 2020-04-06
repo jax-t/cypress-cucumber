@@ -40,11 +40,13 @@ module.exports = (on, config) => {
 
   on('file:preprocessor', webpack(options))
 
+
   module.exports = (on, config) => {
-    debugger
     // `on` is used to hook into various events Cypress emits
     // `config` is the resolved Cypress config
-  
+
+    require('cypress-log-to-output').install(on)
+
     on('before:browser:launch', (browser = {}, launchOptions) => {
       // `args` is an array of all the arguments that will
       // be passed to browsers when it launches

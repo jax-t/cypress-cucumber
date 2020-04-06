@@ -1,17 +1,12 @@
-FROM cypress/base:10
-RUN node --version
-RUN npm --version
-# copy our test application
-COPY package.json package-lock.json ./
-# copy Cypress tests
-COPY cypress.json cypress ./
-COPY cypress ./cypress
+FROM ubuntu:19.04
+LABEL maintainer="jax-t" 
 
-# avoid many lines of progress bars during install
-# https://github.com/cypress-io/cypress/issues/1243
-ENV CI=1
+RUN apt-get update && apt-get install -y apache2 && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# install NPM dependencies and Cypress binary
-RUN npm ci
-# check if the binary was installed successfully
-RUN $(npm bin)/cypress verify
+ENV APACHE_RUN_USER www-data
+ENV APACHE_RUN_GROUP www-data
+ENV APACHE_LOG_DIR /var/log/apache2
+
+EXPOSE 8081
+
+CMD ["apachectl", "-D", "FOREGROUND"] 
