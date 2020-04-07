@@ -3,5 +3,6 @@
   "supportFile": "cypress/support/index.js",
   "testFiles": "**/*.feature",
   "ignoreTestFiles": "**/*.{js,ts}",
-  "projectId": "978m61"
+  "projectId": "978m61",
+  "video": false
 }
