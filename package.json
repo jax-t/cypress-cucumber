@@ -30,7 +30,7 @@
     "e2e:record:parallel": "cypress run -e GLOB='cypress/integration/test/features/*.feature' --record --parallel --key 10d709eb-1cc4-4558-9a0f-aa6e21920f32 --browser chrome --headless",
     "clean:reports": "rm -R -f cypress/cucumber-report && mkdir cypress/cucumber-report",
     "pretest": "npm run clean:reports",
-    "scripts": "./node_modules/.bin/cypress run -e GLOB='cypress/integration/test/features/*.feature' --record --key 10d709eb-1cc4-4558-9a0f-aa6e21920f32",
+    "scripts": "./node_modules/.bin/cypress run -e GLOB='cypress/integration/test/features/*.feature'",
     "report": "node cucumber-html-generator2.js",
     "test": "npm run pretest; npm run scripts || npm run report",
     "debug": "./node_modules/.bin/cypress open",
