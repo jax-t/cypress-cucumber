@@ -17,6 +17,7 @@
     "cypress-cucumber-preprocessor": "^2.2.0",
     "cypress-log-to-output": "^1.0.8",
     "cypress-multi-reporters": "^1.2.4",
+    "mocha": "^7.1.1",
     "ts-loader": "^6.2.2",
     "typescript": "^3.8.3",
     "webpack": "^4.42.1",
