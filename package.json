@@ -31,7 +31,7 @@
     "pretest": "npm run clean:reports",
     "scripts": "./node_modules/.bin/cypress run -e GLOB='cypress/integration/test/features/*.feature'",
     "report": "node cucumber-html-generator2.js",
-    "test": "npm run pretest; npm run script:test || npm run report",
+    "test": "npm run pretest; npm run scripts || npm run report",
     "test1": "npm run pretest; npm run script:test1",
     "test2": "npm run pretest; npm run script:test2",
     "debug": "./node_modules/.bin/cypress open",
