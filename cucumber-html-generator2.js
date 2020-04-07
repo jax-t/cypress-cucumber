@@ -52,7 +52,7 @@ function addScreenshots() {
     })
     screenshots.forEach(screenshot => {
       
-      // regex to parse 'I can use scenario outlines with examples' from either of these:
+      // regex to parse 'I can ugitse scenario outlines with examples' from either of these:
       // Getting Started -- I can use scenario outlines with examples (example #1) (failed).png
       // Gettin Started -- I can use scenario outlines with examples (failed).png
       const regex = /(?<=--\ ).+?((?=\ \(example\ #\d+\))|(?=\ \(failed\))|(?=\.\w{3}))/g

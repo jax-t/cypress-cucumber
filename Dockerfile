@@ -1,7 +1,7 @@
-FROM cypress/base:10
+FROM cypress/browsers:node12.13.0-chrome80-ff74
 RUN node --version
 RUN npm --version
-RUN npm install multiple-cucumber-html-reporter
+RUN npm install -g multiple-cucumber-html-reporter
 
 # copy our test application
 COPY package.json package-lock.json ./
