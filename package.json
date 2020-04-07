@@ -36,8 +36,8 @@
     "test2": "npm run pretest; npm run script:test2",
     "debug": "./node_modules/.bin/cypress open",
     "cy:verify": "cypress verify",
-    "script:test1": "DEBUG=cypress:* ./node_modules/.bin/cypress run -e TAGS='@test1' --browser=chrome --headless",
-    "script:test2": "DEBUG=cypress:* ./node_modules/.bin/cypress run -e TAGS='@test2' --browser=chrome --headless"
+    "script:test1": "./node_modules/.bin/cypress run -e TAGS='@test1' --browser=chrome --headless",
+    "script:test2": "./node_modules/.bin/cypress run -e TAGS='@test2' --browser=chrome --headless"
   },
   "cypress-cucumber-preprocessor": {
     "nonGlobalStepDefinitions": true,
