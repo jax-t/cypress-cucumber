@@ -1,8 +1,8 @@
-Feature: The Google
+Feature: Sign in 3
 
-  I want to open a social network page
+  Sign in 3
   
   @test2
-  Scenario: Opening a social network page
+  Scenario: Sign in 3
     Given I open sign in page
     Then I login with  email and password

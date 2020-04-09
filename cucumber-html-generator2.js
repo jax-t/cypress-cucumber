@@ -12,12 +12,12 @@ const fs = require('fs-extra')
 const path = require('path')
 const chalk = require('chalk')
 
-const cucumberJsonDir = './cypress/cucumber-report'
+const cucumberJsonDir = process.argv[2]
 const cucumberReportFileMap = {}
 const cucumberReportMap = {}
 const jsonIndentLevel = 2
-const htmlReportDir = './cypress/cucumber-report/html'
-const screenshotsDir = './cypress/screenshots/features'
+const htmlReportDir = `${process.argv[2]}/html`
+const screenshotsDir = `${process.argv[2]}/screenshots/features`
 const snapshotDir = './cypress/snapshots'
 
 getCucumberReportMaps()
@@ -47,7 +47,6 @@ function addScreenshots() {
     
 
     const screenshots = fs.readdirSync(path.join(screenshotsDir, feature)).filter(file => {
-      console.log(`start screenshot here ....${file.indexOf('.png')}`)
       return file.indexOf('.png') > -1
     })
     screenshots.forEach(screenshot => {

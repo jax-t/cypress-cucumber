@@ -18,19 +18,8 @@
 const webpack = require('@cypress/webpack-preprocessor')
 module.exports = (on, config) => {
 
-  // on('before:browser:launch', (browser = {}, launchOptions) => {
+  require('cypress-log-to-output').install(on)
 
-  //   // if (browser.name === 'chrome') {
-  //   //   arr = launchOptions.args
-  //   //   arr.forEach(function(item, i) { if (item.includes('--remote-debugging-port')) arr[i] = '--remote-debugging-port=61234'; });
-  //   //   launchOptions.args = arr
-  //   //   console.log(launchOptions.args)
-
-  //   //   // // whatever you return here becomes the new args
-  //   //   return launchOptions
-  //   // }
- 
-  // })
   const options = {
     // send in the options from your webpack.config.js, so it works the same
     // as your app's code
@@ -52,6 +41,7 @@ module.exports = (on, config) => {
       return launchOptions;
     }
   });
+  
 
 }
 

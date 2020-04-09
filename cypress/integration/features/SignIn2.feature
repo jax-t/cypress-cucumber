@@ -1,8 +1,8 @@
-Feature: The Facebook
+Feature: Sign in 2
 
-  I want to open a social network page
+  Sign in 2
   
   @test2
-  Scenario: Opening a social network page
+  Scenario: Sign in 2
     Given I open sign in page
-    Then I login with  email and password
+    Then I login with  email and password screenshot

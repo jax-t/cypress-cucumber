@@ -1,8 +1,9 @@
-Feature: Sign In
+Feature: Sign in
 
-  Sign In
+  Sign in
   
   @test1
-  Scenario: Opening a social network page
+  Scenario: Sign in
     Given I open sign in page
     Then I login with  email and password
+    

@@ -18,28 +18,23 @@
 //  - pass Docker socket which allows Jenkins to start worker containers
 //  - download and execute the latest BlueOcean Docker image
 
-docker run \
-  -u root \
-  -d \
-  --name blue-ocean \
-  -p 8080:8080 \
-  -v jenkins-data:/var/jenkins_home \
-  -v npm-cache:/root/.npm \
-  -v cypress-cache:/root/.cache \
-  -v /var/run/docker.sock:/var/run/docker.sock \
-  jenkinsci/blueocean:latest
+// docker run \
+//   -u root \
+//   -d \
+//   --name blue-ocean \
+//   -p 8080:8080 \
+//   -v jenkins-data:/var/jenkins_home \
+//   -v npm-cache:/root/.npm \
+//   -v cypress-cache:/root/.cache \
+//   -v /var/run/docker.sock:/var/run/docker.sock \
+//   jenkinsci/blueocean:latest
 
 // If you start for the very first time, inspect the logs from the running container
 // to see Administrator password - you will need it to configure Jenkins via localhost:8080 UI
 //    docker logs blue-ocean
 
 pipeline {
-    agent {
-        // this image provides everything needed to run Cypress
-        docker {
-            image 'jax-t-cypress-cucumber-chrome:1.0'
-        }
-    }
+    agent none
     options {
         buildDiscarder(logRotator(numToKeepStr:'10'))
         timeout(time: 20, unit: 'MINUTES')
@@ -47,46 +42,70 @@ pipeline {
     }
 
     stages {
-        stage('build') {
-            steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/jax-t/cypress-cucumber']]])
-                // there a few default environment variables on Jenkins
-                // on local Jenkins machine (assuming port 8080) see
-                // http://localhost:8080/pipeline-syntax/globals#env
-                echo "Running build ${env.BUILD_ID} on ${env.JENKINS_URL}"
-                sh 'npm ci'
-                sh 'npm run cy:verify'
-            }
-        }
-        // first stage installs node dependencies and Cypress binary
         stage('cypress parallel tests') {
             parallel {
                 // start several test jobs in parallel, and they all
                 // will use Cypress Dashboard to load balance any found spec files
                 stage('tester A') {
+                    agent {
+                        // this image provides everything needed to run Cypress
+                        docker {
+                            image 'jax-t-cypress-cucumber-chrome:1.0'
+                        }
+                    }
                     steps {
-
+                        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/jax-t/cypress-cucumber']]])
+                        echo "Running build ${env.BUILD_ID} on ${env.JENKINS_URL}"
+                        sh 'npm ci'
+                        sh 'npm run cy:verify'
                         echo "Running build ${env.BUILD_ID}"
                         sh "npm run test1"
+                        sh "cp -r ${WORKSPACE}/cypress/cucumber-report ${JENKINS_HOME}/jobs/${env.JOB_NAME}/builds/${BUILD_ID}/cucumber-report"
                     }
                 }
 
                 // second tester runs the same command
                 stage('tester B') {
-                    steps {
-                        echo "Running build ${env.BUILD_ID}"
-                        sh "npm run test2"
+                    agent {
+                        // this image provides everything needed to run Cypress
+                        docker {
+                            image 'jax-t-cypress-cucumber-chrome:1.0'
+                        }
                     }
+                    steps {
+                        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/jax-t/cypress-cucumber']]])
+                        echo "Running build ${env.BUILD_ID} on ${env.JENKINS_URL}"
+                        sh 'npm ci'
+                        sh 'npm run cy:verify'
+                        echo "Running build ${env.BUILD_ID}"
+                         sh "npm run test2"
+                        sh "cp -r ${WORKSPACE}/cypress/cucumber-report ${JENKINS_HOME}/jobs/${env.JOB_NAME}/builds/${BUILD_ID}/cucumber-report"
+                    }
+
                 }
             }
 
         }
-    }
-
-    post {
-        always {
-            sh "node cucumber-html-generator2.js"
-            publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: '/var/jenkins_home/workspace/cypress_raw/cypress/cucumber-report/html', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
+        stage('report') {
+            agent {
+                // this image provides everything needed to run Cypress
+                docker {
+                    image 'jax-t-cypress-cucumber-chrome:1.0'
+                }
+            }
+            steps {
+                sh "node cucumber-html-generator2.js ${JENKINS_HOME}/jobs/${env.JOB_NAME}/builds/${BUILD_ID}/cucumber-report"
+                publishHTML([allowMissing: false,
+                             alwaysLinkToLastBuild: true,
+                             keepAll: true,
+                             reportDir: "${JENKINS_HOME}/jobs/${env.JOB_NAME}/builds/${BUILD_ID}/cucumber-report/html",
+                             reportFiles: 'index.html',
+                             reportName: 'HTML Report',
+                             reportTitles: ''])
+            }
         }
     }
+
+
 }
+

@@ -20,3 +20,10 @@ import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+before(() => {
+    cy.log('Global Before Hook');
+});
+  
+after(() => {
+    cy.log('Global After Hook');
+});

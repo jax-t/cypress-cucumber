@@ -4,5 +4,6 @@
   "testFiles": "**/*.feature",
   "ignoreTestFiles": "**/*.{js,ts}",
   "projectId": "978m61",
-  "video": false
+  "video": false,
+  "screenshotsFolder":"./cypress/cucumber-report/screenshots"
 }
