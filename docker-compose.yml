@@ -1,0 +1,25 @@
+version: '2'
+services:
+  jenkins:
+    user: root
+    privileged: true
+    image: 'jenkinsci/blueocean:latest'
+    ports:
+      - '8080:8080'
+      - '443:8443'
+      - '50000:50000'
+    volumes:
+      - 'jenkins_data:/bitnami/jenkins'
+      - 'npm-cache:/root/.npm'
+      - 'cypress-cache:/root/.cache'
+      - '/var/run/docker.sock:/var/run/docker.sock'
+    environment:
+      - JENKINS_USERNAME:admin
+      - JENKINS_PASSWORD:admin
+volumes:
+  jenkins_data:
+    driver: local
+  npm-cache:
+    driver: local
+  cypress-cache:
+    driver: local
